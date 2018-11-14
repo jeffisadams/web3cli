@@ -12,5 +12,8 @@
     "abi-decoder": "^1.2.0",
     "solc": "^0.4.25",
     "web3": "^1.0.0-beta.36"
+  },
+  "bin": {
+    "nodeGeth": "./cli.js"
   }
 }
