@@ -1,0 +1,16 @@
+{
+  "name": "@basket/chain",
+  "version": "1.0.0",
+  "description": "Testing code for interacting with Ethereum.",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/"
+  },
+  "author": "Basket Community Team",
+  "license": "ISC",
+  "dependencies": {
+    "abi-decoder": "^1.2.0",
+    "solc": "^0.4.25",
+    "web3": "^1.0.0-beta.36"
+  }
+}
