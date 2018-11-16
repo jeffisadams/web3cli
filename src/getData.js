@@ -3,6 +3,11 @@ const abiDecoder = require('abi-decoder');
 const fs = require('fs');
 
 module.exports = (async (web3, args) => {
+  if (args.length < 2) {
+    console.log('Usage:\t "nodeGeth getData <host> <contract Name title case> <contract address>"');
+    return;
+  }
+
   const [ contractName, blockNumber ] = args
   const source = fs.readFileSync(`${process.cwd()}/contracts/${contractName.toLowerCase()}.sol`, { encoding: 'utf-8' });
 
