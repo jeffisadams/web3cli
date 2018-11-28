@@ -1,22 +1,22 @@
 pragma solidity >=0.4.0 <0.6.0;
 
-// contract CreateMission {
-//     constructor() public { }
+contract CreateMission {
+    constructor() public { }
 
-//     event MissionCreated(address missionAddress);
+    event MissionCreated(address missionAddress);
 
-//     // Consider an event people can subscribe to
-//     function newMission() public returns(Mission) {
-//         Mission m = new Mission(msg.sender);
-//         emit MissionCreated(address(m));
-//         return m;
-//     }
+    // Consider an event people can subscribe to
+    function newMission(string memory ipfsProductAddress) public payable returns(Mission) {
+        Mission m = (new Mission).value(msg.value)(ipfsProductAddress, msg.sender);
+        emit MissionCreated(address(m));
+        return m;
+    }
 
-//     //tell me a position and I will tell you its address   
-//     // function getMission(uint pos) public view returns(address missionAddress) {
-//     //     return address(contracts[pos]);
-//     // }
-// }
+    // tell me a position and I will tell you its address
+    // function getMission(uint pos) public view returns(address missionAddress) {
+    //     return address(contracts[pos]);
+    // }
+}
 
 contract Mission {
     address owner;
@@ -28,6 +28,11 @@ contract Mission {
 
     enum State { Created, Assigned, Paid }
     State public state = State.Created;
+
+    constructor(string memory productHash, address creator) public payable {
+        productAddress = productHash;
+        owner = creator;
+    }
 
     modifier inState(State _state) {
         require(state == _state, "This contract is not in the proper state");
@@ -44,15 +49,6 @@ contract Mission {
         _;
     }
 
-    constructor(string memory productHash) public payable {
-        productAddress = productHash;
-        owner = msg.sender;
-    }
-
-    function getOwner() public view returns(address) {
-        return owner;
-    }
-
     function assign(address missionAssignee) public onlyOwner inState(State.Created) {
         assignee = missionAssignee;
         state = State.Assigned;
@@ -61,6 +57,7 @@ contract Mission {
     function submit(string memory scanHash) public onlyAssignee inState(State.Assigned) {
         scanAddress = scanHash;
         msg.sender.transfer(address(this).balance);
+        state = State.Paid;
     }
 
     function getBalance() public onlyAssignee view returns (uint256) {
