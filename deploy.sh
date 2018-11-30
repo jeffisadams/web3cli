@@ -4,13 +4,7 @@ rm -rf contractBuild
 npm run compile
 
 MISSION_FACTORY_ADDRESS=`nodeGeth deployMissionFactory $ETH_HOST $FROM`
-# MISSION_ADDRESS=`nodeGeth deployMissionContract $ETH_HOST $FROM $IPFS_PRODUCT`
 
-# echo '\n\nMission Address'
-# echo $MISSION_ADDRESS
-# echo '\n\n'
-
-# echo $MISSION_FACTORY_ADDRESS
 
 ipfs cat $IPFS_PRODUCT
 echo '\n\n'
