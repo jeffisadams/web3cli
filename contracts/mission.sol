@@ -11,11 +11,6 @@ contract CreateMission {
         emit MissionCreated(address(m));
         return m;
     }
-
-    // tell me a position and I will tell you its address
-    // function getMission(uint pos) public view returns(address missionAddress) {
-    //     return address(contracts[pos]);
-    // }
 }
 
 contract Mission {
