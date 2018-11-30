@@ -11,22 +11,21 @@ module.exports = (async (web3, args) => {
   // // Instantiate the contract locally
   const contract = new web3.eth.Contract(abi, address);
 
-  console.log('mission specific methods')
+  console.log('\nmission specific methods')
   console.log(contract.methods)
+
 
   const assign = await contract.methods.assign(assignee).send({
     from: from
   })
-  console.log('assign')
-  console.log(assign)
+  console.log('\nAssign newly created contract to account')
+  // console.log(assign)
 
-
-  
   const beforeBalance = await contract.methods.getBalance().call({
     from: assignee,
     gas: 5000000
   })
-  console.log(`The balance on the contract before submission: ${beforeBalance}`)
+  console.log(`\nThe balance on the contract before submission: ${beforeBalance}`)
 
 
   const submitResult = await contract.methods.submit(scanHash).send({
@@ -37,11 +36,11 @@ module.exports = (async (web3, args) => {
   console.log(submitResult)
 
   const scanIPFSHash = await contract.methods.scanAddress().call()
-  console.log(`The submittedd scan address: ${scanIPFSHash}`)
+  console.log(`\nThe submittedd scan address: ${scanIPFSHash}`)
 
   const afterBalance = await contract.methods.getBalance().call({
     from: assignee,
     gas: 5000000
   })
-  console.log(`The final contract balance: ${afterBalance}`)
+  console.log(`\nThe final contract balance: ${afterBalance}`)
 });
